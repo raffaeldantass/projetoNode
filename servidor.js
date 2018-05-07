@@ -1,10 +1,10 @@
 //Cria servidor
 let express = require('express');
-let servidor = express();
+let server = express();
 
-servidor.get("/", () => {
-    console.log("home");
+server.get("/", (request, response) => {
+    response.send("<h1> Casa do código </h1>");
 })
 
 //Levanta servidor e manda ouvir a porta 3000
-servidor.listen(3000);
+server.listen(3000);

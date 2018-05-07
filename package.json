@@ -15,13 +15,14 @@
   "homepage": "https://github.com/raffaeldantass/projetoNode#readme",
   "dependencies": {
     "ejs": "^2.6.1",
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "mysql": "^2.15.0"
   },
   "devDependencies": {
     "nodemon": "^1.17.4"
   },
   "scripts": {
-    "start": "node servidor.js",
-    "start-dev": "nodemon servidor.js"
+    "start": "node index.js",
+    "start-dev": "nodemon index.js"
   }
 }

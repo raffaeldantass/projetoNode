@@ -1,7 +1,8 @@
 //Cria servidor
-let express = require('express');
-let server = express();
+const express = require('express');
+const server = express();
 
+// Recebe um request e manda uma resposta
 server.get("/", (request, response) => {
     response.send("<h1> Casa do código </h1>");
 })

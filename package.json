@@ -1,0 +1,27 @@
+{
+  "name": "projetonode",
+  "description": "Projeto de curso de Node",
+  "version": "1.0.0",
+  "main": "servidor.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/raffaeldantass/projetoNode.git"
+  },
+  "author": "Rafael Dantas",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/raffaeldantass/projetoNode/issues"
+  },
+  "homepage": "https://github.com/raffaeldantass/projetoNode#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.4"
+  },
+  "scripts": {
+    "start": "node servidor.js",
+    "start-dev": "nodemon servidor.js"
+  }
+}

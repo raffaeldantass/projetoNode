@@ -1,13 +1,10 @@
 //Cria servidor
-let http = require('http');
+let express = require('express');
+let servidor = express();
 
-//Funções de callback
-let servidor = http.createServer(
-    (pedido, resposta) => {
-        resposta.end("oi");
-    }
-); 
-
+servidor.get("/", () => {
+    console.log("home");
+})
 
 //Levanta servidor e manda ouvir a porta 3000
 servidor.listen(3000);

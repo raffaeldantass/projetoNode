@@ -1,7 +1,8 @@
-//Cria servidor
-const express = require('express');
-const server = express();
+const express = require('express')
+// hoisting
+const servidor = express()
 
-server.use(express.static('./public'))
+// callback pra qualquer rota
+servidor.use(express.static('./public'))
 
-module.exports = server
+module.exports = servidor

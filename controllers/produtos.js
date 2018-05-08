@@ -1,29 +1,25 @@
-const mysql = require('mysql')
+const pool = require('../db/pool')
+const listaLivros = require('../db/listaLivros')
 
-const poolDeConexoes = mysql.createPool({
-	user: 'root',
-	password: 'root',
-	database: 'cdc',
-	host: 'localhost'
-})
-
-const listagem = (request, response) => {
-	poolDeConexoes.query("SELECT * FROM livros", (erro, listaDoBanco) => {
-		if (erro) {
-			console.log("erro")
-		} else {
-			response.render('produtos/lista.ejs', {
-				msgErro: "",
-				livros: listaDoBanco
-			});
-		}
-	})
+function listagemProdutos(request, response){
+        
+    listaLivros((erro, livros) => {
+        if(erro){
+            console.error("Deu ruim")
+        } else {
+            response.render('produtos/lista.ejs', {
+                msgErro: "",
+                livros: livros
+            }) 
+        }
+    })        
 }
 
-const cadastro = (request, response) => {
-	console.log('Cadastro')
+function cadastroProdutos(request, response){
+    console.log("Cadastro")    
 }
 
 module.exports = {
-	listagem
+    listagem: listagemProdutos, 
+    cadastro: cadastroProdutos
 }

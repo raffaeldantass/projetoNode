@@ -1,20 +1,21 @@
-const pool = require('../db/pool')
+const lista = (conexao, callbackSucesso, callbackDeuRuim) => {
+	conexao.query(
+		'SELECT * FROM livros', 
+		(erro, lista) => erro 
+			? callbackDeuRuim(erro) 
+			: callbackSucesso(lista)
+	)
+}
 
-const lista = (callbackSucesso, callbackDeuRuim) => {
-	pool.query('SELECT * FROM livros', (erro, lista) => {
-		if(erro) {
-			callbackDeuRuim(erro)
-		} else {
-			callbackSucesso(lista)
-		}
+const cadastra = (conexao) => {
+	conexao.query((erro,conexaoNova) => {
+
 	})
 }
 
-const cadastra = () => {
-
-}
-
-module.exports = {
-	lista: lista,
-	cadastra: cadastra
+module.exports = (conexao) => {
+	return {
+		lista: (callbackSucesso, callbackDeuRuim) => lista(conexao, callbackSucesso, callbackDeuRuim),
+		cadastra: cadastra
+	}
 }

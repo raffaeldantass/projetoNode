@@ -12,7 +12,11 @@ module.exports = class LivrosDAO {
 		)
 	}
 	
-	cadastra() {
-		this.conexao
+	cadastra(livro, callbackSucesso, callbackDeuRuim) {
+		this.conexao.query('INSERT INTO livros SET ?', livro, (erro) => {
+			erro
+			? callbackDeuRuim(erro)
+			: callbackSucesso()
+		})
 	}
 }

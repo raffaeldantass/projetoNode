@@ -1,22 +1,24 @@
-const pool = require('../db/pool')
-const listaLivros = require('../db/listaLivros')
+const livrosDAO = require('../db/livrosDAO')
 
-function listagemProdutos(request, response){
-        
-    listaLivros((erro, livros) => {
-        if(erro){
-            console.error("Deu ruim")
-        } else {
-            response.render('produtos/lista.ejs', {
-                msgErro: "",
-                livros: livros
-            }) 
-        }
-    })        
+const listagemProdutos = (request, response) => {  
+	livrosDAO.lista(
+		(livros) => {
+			response.render('produtos/lista.ejs', {
+					msgErro: "",
+					livros: livros
+			}) 
+		},
+		(erro) => {
+			console.log("Deu ruim\n", erro)
+			response.render('erros/500', {
+				erro
+			})
+		}
+	)        
 }
 
 function cadastroProdutos(request, response){
-    console.log("Cadastro")    
+	livrosDAO.cadastra  
 }
 
 module.exports = {

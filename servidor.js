@@ -7,11 +7,14 @@ servidor.use(express.static('./public'))
 servidor.use(express.urlencoded())
 servidor.use(express.json())
 
+const expressValidator = require('express-validator')
+servidor.use(expressValidator())
+
 require('./routes/produtos')(servidor)
 require('./routes/home')(servidor)
 
 servidor.use((req, resp) => {
-	resp.render('erros/500.ejs', {erro: '404 page not found'})
+	resp.status(404).render('erros/500.ejs', {erro: '404 page not found'})
 })
 
 servidor.use((erro, req, resp, next) => {

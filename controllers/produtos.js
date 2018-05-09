@@ -26,12 +26,30 @@ const listagemProdutos = (request, response, next) => {
 // }
 
 const cadastroProdutos = (request, response, next) => {
-		const livro = request.body
-		request.livrosDAO.cadastra(
-			livro 
-			,() => response.redirect('/produtos')
-			,next
-		)
+	const livro = request.body
+	request
+		.assert('titulo', 'Titulo é obrigatório')
+		.notEmpty()
+	
+	request
+		.assert('preco', 'Preço precisa ser numerico')
+		.isNumeric()
+
+	// request.asyncValidationErrors()
+	// 	.then(() => request.livrosDAO.cadastra(
+	// 			livro
+	// 			,() => response.redirect("/produtos")
+	// 			,next
+	// 	))
+	// 	.catch(validationErrors => response.render('produtos/form.ejs', {validationErrors}))
+
+		request.asyncValidationErrors()
+			.catch(validationErrors => response.render('produtos/form.ejs', {validationErrors}))
+
+		request.asyncValidationErrors()
+			.then(() => request.livrosDAO.cadastra(livro).catch(next))
+			.then(() => response.redirect('/produtos'))
+			.catch(() => {}) //só para parar de dar warnings na execução do node
 } 
 
 const formulario = (request, response) => {

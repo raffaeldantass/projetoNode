@@ -4,8 +4,12 @@
     <div class ="container min-container">
         <h2 class="basic-title">Add</h2>
 
-        <% validationErrors.map((err) => { %>
-          <%= err.msg %>
+				<% validationErrors.map((err) => { %>
+					<div class="container">
+					<div class="alert alert-danger"></div>
+						<%= err.msg %>
+					</div>
+    			</div>
         <% }) %>
 
         <form action="/produtos" method="post" class="well" role="form">

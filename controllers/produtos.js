@@ -1,40 +1,34 @@
-// Função construtora
-const LivrosDAO = require('../db/livrosDAO2')
-const Conexao = require('../db/conexao')
-const queryString = require('query-string')
 
 const listagemProdutos = (request, response) => {  
-	const conexao = Conexao()
-	const livrosDAO = new LivrosDAO(conexao)
-	livrosDAO.lista(
+	request.livrosDAO.lista(
 		(livros) => response.render('produtos/lista.ejs', {
 			msgErro: "",
 			livros: livros
 		}),
-		(erro) => response.render('erros/500', {
-			erro
-		})
-	)  
-	conexao.end()     
+		next
+	)     
 }
 
+// const criaBody = (request, response, next) => {
+// 	let livroString = ""
+
+// 	request.on('data', chunck => {
+// 		livroString += chunck
+// 	})
+
+// 	request.on('end', () => {
+// 		request.body = queryString.parse(livroString)
+// 		next()
+// 	})
+// }
+
 const cadastroProdutos = (request, response) => {
-	let livroString = ""
-
-	request.on('data', chunck => {
-		livroString += chunck
-	}),
-	request.on('end', () => {
-		const livro = queryString.parse(livroString)
-		const conexao = Conexao()
-		const livrosDAO = new LivrosDAO(conexao)
-
-		livrosDAO.cadastra(
+		const livro = request.body
+		request.livrosDAO.cadastra(
 			livro, 
 			() => response.redirect('/produtos'),
-			erro => response.render('erros/500.ejs', {erro})
+			next
 		)
-	})
 } 
 
 const formulario = (request, response) => {
@@ -44,7 +38,7 @@ const formulario = (request, response) => {
 }
 
 module.exports = {
-    listagem: listagemProdutos, 
+		listagem: listagemProdutos,
 		cadastro: cadastroProdutos,
 		form: formulario
 }

@@ -1,11 +1,14 @@
 
-const listagemProdutos = (request, response) => {  
+const listagemProdutos = (request, response, next) => {  
 	request.livrosDAO.lista(
-		(livros) => response.render('produtos/lista.ejs', {
-			msgErro: "",
-			livros: livros
-		}),
-		next
+		(livros) => response.format({
+			html: () => response.render('produtos/lista.ejs', {
+				msgErro: "",
+				livros: livros
+			})
+			,json: () => response.send(livros)
+		})
+		,next
 	)     
 }
 
@@ -22,12 +25,12 @@ const listagemProdutos = (request, response) => {
 // 	})
 // }
 
-const cadastroProdutos = (request, response) => {
+const cadastroProdutos = (request, response, next) => {
 		const livro = request.body
 		request.livrosDAO.cadastra(
-			livro, 
-			() => response.redirect('/produtos'),
-			next
+			livro 
+			,() => response.redirect('/produtos')
+			,next
 		)
 } 
 

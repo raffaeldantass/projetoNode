@@ -15,7 +15,13 @@ servidor.use((req, resp) => {
 })
 
 servidor.use((erro, req, resp, next) => {
-	resp.render('erros/500.ejs', {erro})
+	resp.format({
+		html: () => resp.render('erros/500.ejs', {erro}),
+		json: () => resp.send(erro),
+		default: () => {
+			resp.send('Tipo não suportado')
+		}
+	})
 })
 
 module.exports = servidor
